@@ -17,22 +17,70 @@
 //   • failure (404 / 409) → show the API's error message in the red box
 //   • only one of the two boxes is visible at a time
 // ────────────────────────────────────────────────────────────────
-import { BASE_URL } from '../api';
+// S3.2 — Static form markup
 
-// Use this sample data for the select options in S3.2.
-// In S4.4 you will replace it with data from the API.
+import { BASE_URL } from "../api";
+
 const SAMPLE_COURSES = [
-  { id: 1, name: 'Sample Course One', fee: 120, seatsAvailable: 18 },
-  { id: 2, name: 'Sample Course Two', fee: 200, seatsAvailable: 0 },
+  { id: 1, name: "Sample Course One", fee: 120, seatsTotal: 20, seatsAvailable: 18 },
+  { id: 2, name: "Sample Course Two", fee: 200, seatsTotal: 10, seatsAvailable: 0 },
 ];
 
 export default function EnrollPage() {
-  // TODO S3.2 — build the static form (inputs + button + boxes)
-  // TODO S4.4 — wire the form to the API
   return (
-    <section>
-      <h2 className="mb-4 text-lg font-semibold text-slate-800">Enroll a student</h2>
-      <p className="text-sm text-slate-500">TODO: build the Enroll form here.</p>
+    <section className="max-w-lg">
+      <h2 className="mb-6 text-2xl font-bold text-slate-800">
+        Enroll Student
+      </h2>
+
+      <form className="space-y-4">
+        {/* Student ID */}
+        <div>
+          <label className="mb-2 block text-sm font-medium text-slate-700">
+            Student ID
+          </label>
+          <input
+            type="number"
+            placeholder="Enter student ID"
+            className="w-full rounded-md border border-slate-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        {/* Course Select */}
+        <div>
+          <label className="mb-2 block text-sm font-medium text-slate-700">
+            Course
+          </label>
+
+          <select className="w-full rounded-md border border-slate-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="">Select a course</option>
+
+            {SAMPLE_COURSES.map((course) => (
+              <option key={course.id} value={course.id}>
+                {course.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className="rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+        >
+          Enroll
+        </button>
+      </form>
+
+      {/* Success Box */}
+      <div className="mt-6 rounded-md border border-green-300 bg-green-100 p-4 text-green-700">
+        Student enrolled successfully!
+      </div>
+
+      {/* Error Box */}
+      <div className="mt-4 rounded-md border border-red-300 bg-red-100 p-4 text-red-700">
+        Failed to enroll student.
+      </div>
     </section>
   );
 }
